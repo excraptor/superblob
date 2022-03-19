@@ -4804,8 +4804,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168896170}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 46.8675, y: -9.0227, z: -0.1}
-  m_LocalScale: {x: 0.13551883, y: 0.101354435, z: 1}
+  m_LocalPosition: {x: 47.1597, y: -9.0227, z: -0.2}
+  m_LocalScale: {x: 0.1896315, y: 0.101354435, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 50
@@ -7505,8 +7505,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb0c22f19b96cf49b65ea877251039e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 1166535107}
-  donutsCollectedText: {fileID: 0}
+  text: {fileID: 1166535109}
+  donutsCollectedText: {fileID: 2107145041}
 --- !u!58 &2016727017
 CircleCollider2D:
   m_ObjectHideFlags: 0

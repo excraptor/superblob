@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -12,11 +13,6 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     public static int donuts = 0;
     public static bool won = false;
-
-    private void Start()
-    {
-        StartCoroutine(waitForKeypress());
-    }
 
     private void Awake()
     {
@@ -42,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Escape))
         {
+            Debug.Log("escape pressed");
             Application.Quit();
         }
 
