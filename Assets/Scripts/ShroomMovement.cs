@@ -1,17 +1,16 @@
+using System.Diagnostics;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
-using System.Transactions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class AIPatrol : MonoBehaviour
+public class ShroomMovement : MonoBehaviour
 {
-
-    [HideInInspector] public bool mustPatrol;
+   [HideInInspector] public bool mustPatrol;
 
     public Rigidbody2D rb;
 
@@ -21,22 +20,12 @@ public class AIPatrol : MonoBehaviour
 
     public LayerMask groundLayer;
 
-    public Text text;
-
     private bool mustFlip;
 
-    private bool lost = false;
-
     public PlayerMovement player;
-
     void Start()
     {
         mustPatrol = true;
-        System.Random random = new System.Random();
-        if (random.NextDouble() <= 0.5d)
-        {
-            Flip();
-        }
     }
 
     // Update is called once per frame
@@ -45,15 +34,6 @@ public class AIPatrol : MonoBehaviour
         if (mustPatrol)
         {
             Patrol();
-        }
-
-        if (lost && Input.GetKey(KeyCode.R))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-
-        if(transform.position.y < -50) {
-            Destroy(this.gameObject);
         }
     }
 
@@ -84,19 +64,11 @@ public class AIPatrol : MonoBehaviour
 
    void OnTriggerEnter2D(Collider2D col)
    {
-       if (col.gameObject.tag == "player" && !text.gameObject.activeSelf)
+       UnityEngine.Debug.Log("collided");
+       if (col.gameObject.tag == "player" )
        {
-           if(!this.player.immune && this.player.hp == 1) {
-               text.text = "You lost, try again!\nPress R to restart.";
-               PlayerMovement.donuts = 0;
-               
-               text.gameObject.SetActive(true);
-               Destroy(col.gameObject);
-               lost = true;
-           } else if(!this.player.immune && this.player.hp == 2) {
-              this.player.PowerDown();
-              StartCoroutine(this.player.Immune(2.0f));
-           }
+           StartCoroutine(this.player.PowerUp(2.0f));
+           Destroy(this.gameObject);
        }
    }
 }

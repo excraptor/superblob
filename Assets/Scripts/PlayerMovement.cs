@@ -1,3 +1,4 @@
+using System.Transactions;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,14 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     public static int donuts = 0;
     public static bool won = false;
+
+    public bool powerUpped = false;
+
+    public int hp = 1;
+
+    public bool immune = false;
+
+    public static bool canMoveToNext = false;
 
     private void Awake()
     {
@@ -44,10 +53,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (won && Input.GetKey(KeyCode.R))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(1); // level 1
             donuts = 0;
             won = false;
         }
+        if(canMoveToNext && Input.GetKey(KeyCode.N)) {
+            moveToNextMap();
+        }
+        void moveToNextMap() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
 
     }
 
@@ -67,4 +82,38 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
     }
+
+    public IEnumerator PowerUp(float time) {
+        Debug.Log("started powerup: " + time);
+        this.hp = 2;
+        this.powerUpped = true;
+        transform.localScale = new Vector2(transform.localScale.x * 2, transform.localScale.y * 2);
+        yield return new WaitForSeconds(time);
+        Debug.Log("after waitforseconds: " + time);
+        this.PowerDown();
+    }
+    public void PowerDown() {
+        Debug.Log("started powerdown: ");
+        this.hp = 1;
+        this.powerUpped = false;
+        transform.localScale = new Vector2(transform.localScale.x * 0.5f, transform.localScale.y * 0.5f);
+    }
+    public IEnumerator Immune(float time) {
+        this.immune = true;
+        Color objectColor = this.GetComponent<Renderer>().material.color;
+        float fadeAmount = objectColor.a - 0.2f;
+        objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+        this.GetComponent<Renderer>().material.color = objectColor;
+        yield return new WaitForSeconds(time);
+        this.NotImmune();
+
+    }
+    public void NotImmune() {
+        this.immune = false;
+        Color objectColor = this.GetComponent<Renderer>().material.color;
+        float fadeAmount = objectColor.a + 0.2f;
+        objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+        this.GetComponent<Renderer>().material.color = objectColor;
+    }
+
 }

@@ -8,6 +8,7 @@ TagManager:
   - player
   - lastDonut
   - enemy
+  - lastDonut1
   layers:
   - Default
   - TransparentFX

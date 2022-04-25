@@ -2,12 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class TriggerCollider : MonoBehaviour
 {
     public Text text;
 
     public Text donutsCollectedText;
+
+    
 
 
     // Start is called before the first frame update
@@ -29,7 +32,11 @@ public class TriggerCollider : MonoBehaviour
             Destroy(this.gameObject);
             PlayerMovement.donuts++;
             donutsCollectedText.text = donutsCollectedText.text.Split(':')[0] + ": " + PlayerMovement.donuts;
-            if (this.gameObject.tag == "lastDonut")
+            if(this.gameObject.tag == "lastDonut1") {
+                text.text = "Press N to move to next map";
+                PlayerMovement.canMoveToNext = true;
+            }
+            else if (this.gameObject.tag == "lastDonut")
             {
                 text.text = text.text.Split(':')[0] + ":" + PlayerMovement.donuts;
                 text.gameObject.SetActive(true);
@@ -38,4 +45,6 @@ public class TriggerCollider : MonoBehaviour
             
         }
     }
+    
+    
 }
